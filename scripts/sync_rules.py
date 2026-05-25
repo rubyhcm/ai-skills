@@ -34,6 +34,18 @@ def write_file(path, content):
     with open(path, "w", encoding="utf-8") as f:
         f.write(content)
 
+def get_gitnexus_context():
+    agents_file = "AGENTS.md"
+    if not os.path.exists(agents_file):
+        return ""
+    content = read_file(agents_file)
+    start_tag = "<!-- gitnexus:start -->"
+    end_tag = "<!-- gitnexus:end -->"
+    if start_tag in content and end_tag in content:
+        # Extract the content between tags, including the tags
+        return content[content.find(start_tag):content.find(end_tag) + len(end_tag)]
+    return ""
+
 def main():
     rules_files = sorted(glob.glob(os.path.join(RULES_DIR, "*.md")))
     all_rules_content = []
@@ -42,12 +54,16 @@ def main():
     all_rules_content.append("# GitHub Copilot Instructions\n\nThis is a consolidated file generated from `.rules/`.\n")
     
     gemini_toolchain_content = ""
+    gitnexus_context = get_gitnexus_context()
 
     for rule_path in rules_files:
         filename = os.path.basename(rule_path)
         content = read_file(rule_path).strip()
         
         if filename == "ai-toolchain.md":
+            # Inject GitNexus context if available
+            if gitnexus_context:
+                content = content + "\n\n" + gitnexus_context
             gemini_toolchain_content = content
             
         # 1. Sync Kiro (.kiro/steering/xxx.md)

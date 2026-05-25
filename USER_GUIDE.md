@@ -651,6 +651,11 @@ AI phải dùng GitNexus để:
 - Phân tích **Blast Radius (Impact Analysis)** trước khi refactor.
 - Truy vấn Graph để hiểu quan hệ giữa các services/structs.
 
+**Quy trình cập nhật tri thức (MANDATORY):**
+Khi codebase có thay đổi lớn, bạn cần chạy bộ lệnh sau để cập nhật "trí thông minh" cho tất cả Agents:
+1. `npx gitnexus analyze` — Cập nhật index và tri thức cho Claude.
+2. `python3 scripts/sync_rules.py` — Đồng bộ tri thức GitNexus sang Cursor, Kiro, Gemini, v.v.
+
 ### 3. Git Autonomy (An toàn source control)
 AI **KHÔNG ĐƯỢC PHÉP** tự ý chạy `git add .` hoặc `git commit` bừa bãi. Chỉ được stage chính xác file đã sửa khi có yêu cầu commit cụ thể từ user.
 
