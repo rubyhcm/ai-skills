@@ -24,6 +24,10 @@ Repository này là bộ khung hướng dẫn và quản trị tập trung (**Ce
 | [USER_GUIDE.md](USER_GUIDE.md) | Hướng dẫn sử dụng đầy đủ tất cả agents |
 | [docs/sonarcloud-scan-guide.md](docs/sonarcloud-scan-guide.md) | Hướng dẫn cài đặt và chạy SonarCloud scan |
 | [.kiro/README.md](.kiro/README.md) | Hướng dẫn sử dụng Kiro steering rules và spec |
+| [docs/rtk-setup-guide.md](docs/rtk-setup-guide.md) | Hướng dẫn cài đặt và sử dụng RTK (Rust Token Killer) |
+| [docs/icm-setup-guide.md](docs/icm-setup-guide.md) | Hướng dẫn cài đặt và sử dụng ICM (Interactive Context Management) |
+| [docs/gitnexus-setup-guide.md](docs/gitnexus-setup-guide.md) | Hướng dẫn cài đặt và sử dụng GitNexus (Code Intelligence Engine) |
+| [docs/ai-toolchain-integration-status.md](docs/ai-toolchain-integration-status.md) | Trạng thái tích hợp RTK/ICM/GitNexus trên tất cả platforms |
 
 ## Cách dùng nhanh
 

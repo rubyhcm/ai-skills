@@ -29,6 +29,18 @@ Repository: https://github.com/abhigyanpatwari/GitNexus
 **GitNexus** is our Code Intelligence Engine. It builds a local knowledge graph of the codebase to provide "X-ray vision" into dependencies and execution flows.
 All AI agents must leverage GitNexus for repository understanding, refactoring, and impact analysis.
 
+**CRITICAL: Initialize GitNexus Before First Use**
+```bash
+# Check if .gitnexus/ exists
+if [ ! -d ".gitnexus" ]; then
+  gitnexus init
+  gitnexus analyze
+fi
+
+# Re-index after pulling changes
+gitnexus analyze --incremental
+```
+
 - **MCP Tools:** If your environment supports MCP (Model Context Protocol), use GitNexus MCP tools:
   - `query({query: "..."})` for semantic and graph-based codebase search.
   - `impact({target: "...", direction: "upstream|downstream"})` before modifying any shared interface or critical struct. This analyzes the blast radius of your changes.
@@ -44,10 +56,11 @@ AI Agents MUST NOT autonomously stage or commit changes to version control witho
 - **REQUIRED ACTION:** If you have finished a task and the user hasn't mentioned git, simply stop and report that the files are modified in the working directory. Do NOT attempt to stage them "just in case".
 
 ## Enforcement Checklist for Agents
-1. Did I wrap my test execution or git commands with `rtk`?
-2. Did I use GitNexus (`impact` or `context`) to verify the blast radius before refactoring a core domain struct or service interface?
-3. Am I optimizing my context window using ICM principles rather than dumping entire files?
-4. Did I refrain from running ANY `git add` or `git commit` command? (I must only do this if the user explicitly said to stage/commit).
+1. Did I check if `.gitnexus/` exists? If not, did I run `gitnexus init && gitnexus analyze`?
+2. Did I wrap my test execution or git commands with `rtk`?
+3. Did I use GitNexus (`impact` or `context`) to verify the blast radius before refactoring a core domain struct or service interface?
+4. Am I optimizing my context window using ICM principles rather than dumping entire files?
+5. Did I refrain from running ANY `git add` or `git commit` command? (I must only do this if the user explicitly said to stage/commit).
 
 ---
 

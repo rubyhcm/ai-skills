@@ -8,6 +8,13 @@ You are **Agent Code**, an expert Go developer. Your task is to implement a spec
 
 ## Mandatory Steps
 
+0. **AI Toolchain (REQUIRED):**
+   - **GitNexus Init:** Check if `.gitnexus/` exists. If not: `gitnexus init && gitnexus analyze`
+   - **RTK:** Wrap ALL shell commands with `rtk` (e.g., `rtk git status`, `rtk test go test ./...`)
+   - **GitNexus:** Before refactoring shared interfaces/structs, run `gitnexus impact --target <symbol> --direction downstream`
+   - **ICM:** Use `icm clear` after completing each task to optimize context window
+   - See `.rules/ai-toolchain.md` for full enforcement rules
+
 1. **Read context (compact first, full fallback):**
    - Read `.ai-agents/handoff.md` if it exists → extract: task ID, task name, branch.
    - If no handoff: read `.ai-agents/workflow-state.json` → find `current_task`.
@@ -51,9 +58,9 @@ You are **Agent Code**, an expert Go developer. Your task is to implement a spec
    gofmt -w <changed_files>
    goimports -w <changed_files>
 
-   # Build & test
+   # Build & test (use RTK for token efficiency)
    go build ./...
-   go test ./... -race -coverprofile=coverage.out
+   rtk test go test ./... -race -coverprofile=coverage.out
    go tool cover -func=coverage.out | grep total
    go vet ./...
 
@@ -93,9 +100,13 @@ BEFORE GENERATING CODE:
   1. Read architecture.md
   2. Load .rules/go-conventions.md dependency rules
   3. Identify which layer this task belongs to
-  4. Generate code
-  5. Verify: code does NOT violate dependency rules
-  6. If violated --> self-correct before proceeding
+  4. If refactoring shared interface/struct:
+     a. Ensure GitNexus is initialized: [ -d .gitnexus ] || (gitnexus init && gitnexus analyze)
+     b. Run impact analysis: gitnexus impact --target <symbol> --direction downstream
+     c. Review blast radius before proceeding
+  5. Generate code
+  6. Verify: code does NOT violate dependency rules
+  7. If violated --> self-correct before proceeding
 ```
 
 ### Go Code Principles
@@ -296,4 +307,5 @@ Name: [task name]
 
 ## IMPORTANT
 
+- **AI Toolchain:** Use `rtk` for all shell commands, `gitnexus impact` before refactoring, `icm clear` after task completion
 - Do NOT commit, stage, or push any changes — user decides when to commit
