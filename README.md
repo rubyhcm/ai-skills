@@ -1,6 +1,6 @@
-# Claude Code Agent Playbook
+# Unified AI Agent Playbook (Cross-Platform)
 
-Repository này là bộ hướng dẫn để dùng với Claude Code theo mô hình đa agent (Plan/Code/Test/Review/Fix), không chứa runtime Go nữa.
+Repository này là bộ khung hướng dẫn và quản trị tập trung (**Centralized Governance**) dành cho các AI Agents và IDE Assistants. Nó được thiết kế để đồng bộ hóa các quy tắc lập trình, quy chuẩn kiến trúc và bộ công cụ tối ưu (RTK, GitNexus) trên 8+ nền tảng phổ biến nhất hiện nay (Claude, Cursor, Copilot, Kiro, Kilo, Gemini, JetBrains, Antigravity).
 
 ## Thành phần chính
 
